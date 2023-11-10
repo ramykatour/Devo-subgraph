@@ -41,7 +41,7 @@
   {
     "constant": true,
     "inputs": [],
-    "name": "INIT_CODE_HASH",
+    "name": "INIT_CODE_PAIR_HASH",
     "outputs": [{ "internalType": "bytes32", "name": "", "type": "bytes32" }],
     "payable": false,
     "stateMutability": "view",
@@ -112,18 +112,6 @@
   {
     "constant": false,
     "inputs": [
-      { "internalType": "address", "name": "_pair", "type": "address" },
-      { "internalType": "uint8", "name": "_devFee", "type": "uint8" }
-    ],
-    "name": "setDevFee",
-    "outputs": [],
-    "payable": false,
-    "stateMutability": "nonpayable",
-    "type": "function"
-  },
-  {
-    "constant": false,
-    "inputs": [
       { "internalType": "address", "name": "_feeTo", "type": "address" }
     ],
     "name": "setFeeTo",
@@ -138,18 +126,6 @@
       { "internalType": "address", "name": "_feeToSetter", "type": "address" }
     ],
     "name": "setFeeToSetter",
-    "outputs": [],
-    "payable": false,
-    "stateMutability": "nonpayable",
-    "type": "function"
-  },
-  {
-    "constant": false,
-    "inputs": [
-      { "internalType": "address", "name": "_pair", "type": "address" },
-      { "internalType": "uint32", "name": "_swapFee", "type": "uint32" }
-    ],
-    "name": "setSwapFee",
     "outputs": [],
     "payable": false,
     "stateMutability": "nonpayable",
