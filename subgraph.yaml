@@ -1,0 +1,59 @@
+specVersion: 0.0.5
+description: Nomiswap is the first decentralized exchange platform on the market with a binary referral system and the lowest platform transaction fees (0.1%).
+repository: https://github.com/unchase-subgraphs/nomiswap-subgraph
+schema:
+  file: ./schema.graphql
+dataSources:
+  - kind: ethereum
+    name: Factory
+    network: bsc
+    source:
+      address: "0xd6715A8be3944ec72738F0BFDC739d48C3c29349"
+      abi: Factory
+      startBlock: 13908914
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.7
+      language: wasm/assemblyscript
+      entities:
+        - Pair
+        - Token
+      abis:
+        - name: Factory
+          file: ./abis/Factory.json
+        - name: ERC20
+          file: ./abis/ERC20.json
+        - name: ERC20NameBytes
+          file: ./abis/ERC20NameBytes.json
+        - name: ERC20SymbolBytes
+          file: ./abis/ERC20SymbolBytes.json
+      eventHandlers:
+        - event: PairCreated(indexed address,indexed address,address,uint256)
+          handler: handlePairCreated
+      file: ./src/factory.ts
+templates:
+  - kind: ethereum/contract
+    name: Pair
+    network: bsc
+    source:
+      abi: Pair
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.7
+      language: wasm/assemblyscript
+      file: ./src/core.ts
+      entities:
+        - Pair
+        - Token
+      abis:
+        - name: Factory
+          file: ./abis/Factory.json
+        - name: Pair
+          file: ./abis/Pair.json
+      eventHandlers:
+        - event: Burn(indexed address,uint256,uint256,indexed address)
+          handler: handleBurn
+        - event: Swap(indexed address,uint256,uint256,uint256,uint256,indexed address)
+          handler: handleSwap
+        - event: Sync(uint112,uint112)
+          handler: handleSync
