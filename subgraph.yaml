@@ -1,6 +1,6 @@
 specVersion: 0.0.5
-description: Devo-subgraph is a decentralized exchange (DEX) which runs on Avalanche, uses the same automated market-making (AMM) model as Uniswap, features a native governance token called YTS that is fully community distributed and is capable of trading all tokens issued on Ethereum and Avalanche.
-repository: https://github.com/ramykatour/Devo-subgraph
+description: PancakeSwap is a decentralized protocol for automated token exchange on Binance Smart Chain.
+repository: https://github.com/unchase-subgraphs/pancakeswap-v2-subgraph
 schema:
   file: ./schema.graphql
 dataSources:
