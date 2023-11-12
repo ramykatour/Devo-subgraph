@@ -1,24 +1,55 @@
 specVersion: 0.0.5
+description: Devo-subgraph is a decentralized exchange (DEX) which runs on Avalanche, uses the same automated market-making (AMM) model as Uniswap, features a native governance token called YTS that is fully community distributed and is capable of trading all tokens issued on Ethereum and Avalanche.
+repository: https://github.com/ramykatour/Devo-subgraph
 schema:
   file: ./schema.graphql
 dataSources:
   - kind: ethereum
-    name: Contract
+    name: Factory
     network: matic
     source:
       address: "0x0C7bE96f6721F119a95FF3E68bd7fC4b25d0881D"
-      abi: Contract
+      abi: Factory
       startBlock: 48457473
     mapping:
       kind: ethereum/events
       apiVersion: 0.0.7
       language: wasm/assemblyscript
       entities:
-        - PairCreated
+        - Pair
+        - Token
       abis:
-        - name: Contract
-          file: ./abis/Contract.json
+        - name: Factory
+          file: ./abis/Factory.json
+        - name: ERC20
+          file: ./abis/ERC20.json
+        - name: ERC20SymbolBytes
+          file: ./abis/ERC20SymbolBytes.json
+        - name: ERC20NameBytes
+          file: ./abis/ERC20NameBytes.json
       eventHandlers:
         - event: PairCreated(indexed address,indexed address,address,uint256)
           handler: handlePairCreated
-      file: ./src/contract.ts
+      file: ./src/factory.ts
+templates:
+  - kind: ethereum/contract
+    name: Pair
+    network: matic
+    source:
+      abi: Pair
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.7
+      language: wasm/assemblyscript
+      file: ./src/core.ts
+      entities:
+        - Pair
+        - Token
+      abis:
+        - name: Pair
+          file: ./abis/pair.json
+        - name: Factory
+          file: ./abis/factory.json
+      eventHandlers:
+        - event: Sync(uint112,uint112)
+          handler: handleSync
